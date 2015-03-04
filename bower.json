@@ -1,11 +1,10 @@
 {
   "name": "sir-trevor-js",
-  "version": "0.5.0-beta1",
+  "version": "0.5.2-beta1",
   "ignore": [
     "**/.*",
     "node_modules",
     "components",
-    "src/!(blocks)",
     "spec",
     "examples",
     "website",
