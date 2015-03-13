@@ -18,6 +18,10 @@ module.exports = Block.extend({
   icon_name: 'text',
 
   loadData: function(data){
-    this.getTextBlock().html(stToHTML(data.text, this.type));
+    if (this.options.convertFromMarkdown && !data.isHtml) {
+      this.setTextBlockHTML(stToHTML(data.text, this.type));
+    } else {
+      this.setTextBlockHTML(data.text);
+    }
   },
 });

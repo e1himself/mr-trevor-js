@@ -1,6 +1,6 @@
 {
   "name": "sir-trevor-js",
-  "version": "0.5.2-beta1",
+  "version": "0.5.0-beta3",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -9,6 +9,11 @@
     "examples",
     "website",
     "BrowserRunner.html"
+  ],
+  "main": [
+    "sir-trevor.js",
+    "sir-trevor.css",
+    "sir-trevor-icons.css"
   ],
   "dependencies": {
     "es5-shim": "~v4.0.3",

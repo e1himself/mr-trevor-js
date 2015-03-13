@@ -11,9 +11,9 @@ describe("Block", function(){
   beforeEach(function(){
     element = $("<textarea>");
     editor = new SirTrevor.Editor({ el: element });
-    block = new SirTrevor.Blocks.Text({}, editor.ID, editor.mediator);
-    block_two = new SirTrevor.Blocks.Text({}, editor.ID, editor.mediator);
-    block_three = new SirTrevor.Blocks.ComplexType({}, editor.ID, editor.mediator);
+    block = new SirTrevor.Blocks.Text({}, editor, editor.mediator);
+    block_two = new SirTrevor.Blocks.Text({}, editor, editor.mediator);
+    block_three = new SirTrevor.Blocks.ComplexType({}, editor, editor.mediator);
   });
 
   it("block is instance of ST.Block", function(){
@@ -85,6 +85,52 @@ describe("Block", function(){
       expect(block.checkAndLoadData).toHaveBeenCalled();
     });
 
+    describe('initTextBlocks', function() {
+      beforeEach(function() {
+        spyOn(block, '_initTextBlocks');
+      });
+
+      it('is called when block has text block', function() {
+        block.hasTextBlock = function() { return true; };
+
+        block.render();
+
+        expect(block._initTextBlocks).toHaveBeenCalled();
+      });
+
+      it('isn\'t called when block doesn\'t have text blocks', function() {
+        block.hasTextBlock = function() { return false; };
+
+        block.render();
+
+        expect(block._initTextBlocks).not.toHaveBeenCalled();
+      });
+    });
   });
 
+  describe("configuring Scribe", function() {
+    describe("with a function (configureScribe)", function() {
+      beforeEach(function(){
+        block.configureScribe = function(scribe){
+          scribe.allowBlockElements = false;
+        };
+        block.render();
+      });
+
+      it("configures scribe instance", function() {
+        expect(block._scribe.allowBlockElements).toBe(false);
+      });
+    });
+
+    describe("with an object (scribeOptions)", function() {
+      beforeEach(function() {
+        block.scribeOptions = {allowBlockElements: false};
+        block.render();
+      });
+
+      it("instantiates scribe with options", function() {
+        expect(block._scribe.options.allowBlockElements).toBe(false);
+      });
+    });
+  });
 });
